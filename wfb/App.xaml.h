@@ -15,7 +15,8 @@ namespace winrt::wfb::implementation
 
 		void PositionWindowPercentage(winrt::Microsoft::UI::Xaml::Window const& window, double px, double py);
 		void SizeWindowPercentage(winrt::Microsoft::UI::Xaml::Window const& window, double pw, double ph);
-
+		
+		void SetupWindowPresenter(const winrt::Microsoft::UI::Xaml::Window& window);
 		void HandleWindowClose(const winrt::Microsoft::UI::Xaml::Window& window);
 
 		winrt::Microsoft::UI::Xaml::DispatcherTimer flapTimer{ nullptr }, logicTimer{ nullptr };

@@ -7,6 +7,7 @@ using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace Windows::UI::Core;
 using namespace Microsoft::UI::Input;
+using namespace Microsoft::UI::Windowing;
 using namespace Microsoft::UI::Xaml;
 using namespace Microsoft::UI::Xaml::Controls;
 using namespace Microsoft::UI::Xaml::Media;
@@ -40,6 +41,15 @@ namespace winrt::wfb::implementation
 		window.AppWindow().Resize({ w, h });
 	}
 
+	void App::SetupWindowPresenter(const winrt::Microsoft::UI::Xaml::Window& window)
+	{
+		auto presenter = window.AppWindow().Presenter().as<OverlappedPresenter>();
+		presenter.IsResizable(false);
+		presenter.IsAlwaysOnTop(true);
+		presenter.IsMaximizable(false);
+		presenter.IsMinimizable(false);
+	}
+
 	void App::CreateScoreWindow()
 	{
 		if (scoreWindow)
@@ -53,6 +63,7 @@ namespace winrt::wfb::implementation
 		scoreText.VerticalAlignment(VerticalAlignment::Center);
 
 		scoreWindow = {};
+		SetupWindowPresenter(scoreWindow);
 		scoreWindow.Content(scoreText);
 		scoreWindow.Title(L"Score");
 		scoreWindow.Activate();
@@ -80,6 +91,7 @@ namespace winrt::wfb::implementation
 		}
 
 		birdWindow = {};
+		SetupWindowPresenter(birdWindow);
 		birdWindow.Content(grid);
 		birdWindow.Title(L"Bird");
 		birdWindow.Activate();
@@ -125,6 +137,7 @@ namespace winrt::wfb::implementation
 			if (!freePipeWindows.empty()) freePipeWindows.pop_back();
 			pipeWindow.Title(L"Pipe");
 			pipeWindow.Content(pipeImage);
+			SetupWindowPresenter(pipeWindow);
 			pipeWindow.Activate();
 			pipeWindows.push_back(pipeWindow);
 
